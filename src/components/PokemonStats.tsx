@@ -15,8 +15,7 @@ function PokemonStats({ stats }: Props) {
           <span>{stat.nombre}</span>
 
           <div className="barra">
-            <div
-              className="barra-relleno"
+            <div className="barra-relleno"
               style={{ width: `${Math.min(stat.valor, 100)}%` }}
             ></div>
           </div>

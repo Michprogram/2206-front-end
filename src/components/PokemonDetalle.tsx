@@ -1,8 +1,13 @@
-import { Pokemon } from "../types/Pokemon";
+import { type Pokemon } from "../types/Pokemon";
 import PokemonStats from "./PokemonStats";
 
 type Props = {
   pokemon: Pokemon;
+  agregarFavorito: ({pokemon, agregarFavorito }: Props) {
+    function agregarFavorito(params:type) {
+      
+    }
+  }
 };
 
 function PokemonDetalle({ pokemon }: Props) {
@@ -33,7 +38,7 @@ function PokemonDetalle({ pokemon }: Props) {
           <p><strong>Altura:</strong> {pokemon.altura / 10} m</p>
           <p><strong>Peso:</strong> {pokemon.peso / 10} kg</p>
         </div>
-
+<button className="btn-favorito" onClick={()} => agregarFavorito(pokemon)
         <PokemonStats stats={pokemon.stats} />
       </div>
     </article>
@@ -41,54 +46,3 @@ function PokemonDetalle({ pokemon }: Props) {
 }
 
 export default PokemonDetalle;
-
-
-const buscarPokemon = async () => {
-  if (!busqueda.trim()) {
-    setError("Debes ingresar un nombre o ID de Pokémon.");
-    setPokemon(null);
-    return;
-  }
-
-  try {
-    setCargando(true);
-    setError("");
-    setPokemon(null);
-
-    const respuesta = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${busqueda.toLowerCase().trim()}`
-    );
-
-    if (!respuesta.ok) {
-      throw new Error("Pokémon no encontrado.");
-    }
-
-    const data = await respuesta.json();
-
-    const pokemonTransformado: Pokemon = {
-      id: data.id,
-      nombre: data.name,
-      imagen:
-        data.sprites.other["official-artwork"].front_default ||
-        data.sprites.front_default,
-      tipos: data.types.map(
-        (item: { type: { name: string } }) => item.type.name
-      ),
-      altura: data.height,
-      peso: data.weight,
-      stats: data.stats.map(
-        (item: { base_stat: number; stat: { name: string } }) => ({
-          nombre: item.stat.name,
-          valor: item.base_stat,
-        })
-      ),
-    };
-
-    setPokemon(pokemonTransformado);
-    setBusqueda("");
-  } catch (error) {
-    setError("No se encontró el Pokémon solicitado.");
-  } finally {
-    setCargando(false);
-  }
-};
